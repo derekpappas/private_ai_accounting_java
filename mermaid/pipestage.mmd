@@ -1,0 +1,108 @@
+%% ```mermaid
+
+%% %%{init: {"themeVariables": {"flowchartFontSize": "16px", "edgeLabelBackground":"#ffffff", "tertiaryColor": "#ffffff"}}}%%
+%% ---
+%% title: Node
+%% ---
+flowchart LR
+    pss[Pipe Stage: Start]
+    psgs[Pipe Stage: get the list of sources for the financial statements]
+ 
+  pss --> psgs
+
+    psgf[Pipe Stage: GetFiles] 
+    extrbifs[External: Extract info from the bank statement]
+    bie[Bank info extracted from the bank statement]
+    exrccifs[External: Extract info from the credit card statement]
+    cie[Company info extracted from the credit card statement]
+    psgcir[Pipe Stage: GetCompany Info -Get the company info record from the database]
+    psgbir[Pipe Stage: GetBankInfo - Get the bank info from the database]
+    pst[Pipe Stage: Financial Statement Transactions]
+
+    psgf -->|Bank statement exists?| extrbifs
+    extrbifs --> bie
+    |Bank info exists?| psgbir
+    bidb --> psgbir
+    psgbir -->|Bank info does not exist?| formbi
+    formbi -->|Save bank info| bif
+    bif --> bidb
+    bif --> pst    
+    
+%%     psgcir
+%%     psgf --> |Company info !exists?| formci
+%%     |Company info exists?| psgbir
+     
+%%    form0[External: User input form for financial statement sources]
+ 
+ 
+ 
+
+    formsds[External: User input form for statement data sources]
+    extrbifs[External: Extract info from the bank statement]
+    exrccifs[External: Extract info from the credit card statement]
+    formci[External: User input form for company info]
+    formbi[External: User input form for bank info]
+    bifse[Bank info record - from the statement extraction and the user input]
+    cifse[Company info record - from the statement extraction and the user input]
+    bidb[(Bank info DB)]
+    cidb[(Company info DB)]
+
+    psnt[Pipe Stage: NormalizeTransactions]
+    pscnr[Pipe Stage: CombineNormalizedRecords]
+    pse[Pipe Stage: End]
+
+    pss --> psgs
+    bidb --> bi0
+    bi0 --> ps0
+    ps0 -->|Bank info exists?| bi1
+    bi1 --> ps1
+    ps0 -->|Bank info does not exist| extrbifs
+    extrbifs --> formbi
+    formbi --> bi2
+    bi2 -->|Save bank info| bidb
+    %% bi0 --> ps1
+
+    %% ps0 --> if company info !exists -->|Yes| ps1
+    %% if company info !exists{Company info exists?} -->|No| exrccifs
+    %% exrccifs --> formsds add additional company info
+    %% formciFS --> ci1
+    %% ci1 -->|Save company info| cidb
+    %% cidb --> ci2
+    %% ci2 --> ps1
+
+
+    %% ps1 --> ps2
+    %% ps2 --> ps3
+    %% ps3 --> ps4
+    %% ps4 --> ps5
+
+    %% subgraph CompanyInfoDB
+    %%     db1[(Company info DB)]
+    %%     db2[(Bank info DB)]
+    %%     db3[(Chart of accounts)]
+    %% end
+
+    %% db1 --> ps1
+    %% db2 --> ps1
+    %% db3 --> ps1
+    %% ps1 -->|If company info does not exist| extr
+
+
+
+%% If the company info DB does not contain company info for the current company, then prompt the user to create it, using a form and save it in the database
+%% Company info recordCompany nameContact ps – a reference to the contacts contact Info recordCompany type – LLC, S Corporation, C corporationType of business, the companies is engaged inName – Use a Dunns category
+%% If The company does not contain a bank info record and create a bank info record And add the bank info ps to the company info record list of bank info
+
+
+%% Directory.File zero.CSVFile n.CSV
+%% Pipe stage 1Repeat this step for every input file/financial account and create one large list of all transactionsGet files(source, bank info, statement)Output: 
+%% Class transactionslist<transaction info> TransactioninfoList
+%% Class transaction infoList < String> Transaction rowBank info bank infoCompany in first space company in infoUU ps transaction psFile nameInt Row number
+%% Pipe Stage 2Normalize transactions(Transactions)Output: Normalized transactions
+%% Class normalized transactionsTransactions transactionslist< Normalizedtransaction info> NormalizedTransaction List
+%% enum Normalized bank transaction type
+%% enum Normalize credit card transaction type
+%% enum transaction sourceBank Transaction.Credit card Transaction.Carryover balance.Adjustment.Beginning statement balanceEnding statement balance
+%% Class Normalized transaction InfoTransaction Info transaction InfoNormalize transaction record
+%% Class normalized transaction record-The normalized trans action record is used for representing normalized transactions, carryover balances, credit card, and bank statement, beginning and ending balancesNormalized bank transaction type Normal credit card transaction typeChart of accounts category COA // Optional field use for non-financial statement record such as carryover balance, beginning and ending bank or credit card statement balances
+%% Pipe stage 3Combine Normalized records (Normalized transactions, List of other input Records)-Other input records include Bank and credit card statement, beginning and ending balances, carryover balances,…
