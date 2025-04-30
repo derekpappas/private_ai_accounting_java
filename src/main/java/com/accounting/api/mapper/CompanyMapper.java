@@ -1,12 +1,13 @@
 package com.accounting.api.mapper;
 
-import com.accounting.api.dto.CompanyDTO;
-import com.accounting.model.entity.Company;
+import java.util.List;
+
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
 
-import java.util.List;
+import com.accounting.api.dto.CompanyDTO;
+import com.accounting.model.entity.Company;
 
 @Mapper(componentModel = "spring")
 public interface CompanyMapper {
@@ -21,5 +22,8 @@ public interface CompanyMapper {
 
     List<CompanyDTO> toDtoList(List<Company> entities);
 
+    @Mapping(target = "contactPerson", ignore = true)
+    @Mapping(target = "bankAccounts", ignore = true)
+    @Mapping(target = "creditCards", ignore = true)
     void updateEntityFromDto(CompanyDTO dto, @MappingTarget Company entity);
 } 

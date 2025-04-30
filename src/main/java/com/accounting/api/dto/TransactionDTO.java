@@ -5,6 +5,8 @@ import lombok.Data;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
+import com.accounting.model.enums.TransactionType;
+
 @Data
 public class TransactionDTO {
     private Long id;
@@ -21,6 +23,9 @@ public class TransactionDTO {
     @DecimalMin(value = "0.01", message = "Amount must be greater than 0")
     @Digits(integer = 10, fraction = 2, message = "Amount must have at most 10 digits and 2 decimal places")
     private BigDecimal amount;
+    
+    @NotNull(message = "Transaction type is required")
+    private TransactionType transactionType;
     
     @NotNull(message = "File ID is required")
     @Positive(message = "File ID must be positive")

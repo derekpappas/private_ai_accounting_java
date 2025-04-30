@@ -1,6 +1,5 @@
 package com.accounting.model.entity;
 
-import com.accounting.model.enums.CorporationType;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -19,9 +18,8 @@ public class Company {
     @Column(nullable = false)
     private String name;
 
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
-    private CorporationType corporationType;
+    @Column(name = "corporation_type", nullable = false)
+    private String corporationType;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "contact_person_id")

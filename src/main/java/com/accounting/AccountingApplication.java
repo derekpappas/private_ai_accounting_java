@@ -10,10 +10,11 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 @EntityScan("com.accounting.model.entity")
 @EnableJpaRepositories("com.accounting.repository")
 @ComponentScan(basePackages = {
-    "com.accounting.api.controller",
-    "com.accounting.api.exception",
+    "com.accounting.api",
+    "com.accounting.api.mapper",
     "com.accounting.service",
-    "com.accounting.service.impl"
+    "com.accounting.config",
+    "com.accounting.repository"
 })
 public class AccountingApplication {
     public static void main(String[] args) {

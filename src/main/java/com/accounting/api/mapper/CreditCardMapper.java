@@ -1,12 +1,13 @@
 package com.accounting.api.mapper;
 
-import com.accounting.api.dto.CreditCardDTO;
-import com.accounting.model.entity.CreditCard;
+import java.util.List;
+
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
 
-import java.util.List;
+import com.accounting.api.dto.CreditCardDTO;
+import com.accounting.model.entity.CreditCard;
 
 @Mapper(componentModel = "spring")
 public interface CreditCardMapper {
@@ -20,5 +21,7 @@ public interface CreditCardMapper {
 
     List<CreditCardDTO> toDtoList(List<CreditCard> entities);
 
+    @Mapping(target = "company", ignore = true)
+    @Mapping(target = "files", ignore = true)
     void updateEntityFromDto(CreditCardDTO dto, @MappingTarget CreditCard entity);
 } 

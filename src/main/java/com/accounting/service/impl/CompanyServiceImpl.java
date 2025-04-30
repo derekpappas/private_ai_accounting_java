@@ -12,34 +12,45 @@ import com.accounting.model.entity.Company;
 import com.accounting.model.entity.ContactPerson;
 import com.accounting.repository.CompanyRepository;
 import com.accounting.repository.ContactPersonRepository;
+import com.accounting.repository.impl.CompanyRepositoryImpl;
 import com.accounting.service.CompanyService;
 
 import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
-@Transactional
+@Transactional(readOnly = true)
 public class CompanyServiceImpl implements CompanyService {
     private final CompanyRepository companyRepository;
     private final ContactPersonRepository contactPersonRepository;
+    private final CompanyRepositoryImpl companyRepositoryImpl;
     private final CompanyMapper companyMapper;
 
     @Override
     @Transactional
     public CompanyDTO createCompany(CompanyDTO companyDTO) {
-        if (companyRepository.existsByName(companyDTO.getName())) {
-            throw new RuntimeException("Company with name " + companyDTO.getName() + " already exists");
-        }
+        try {
+            if (companyRepository.existsByName(companyDTO.getName())) {
+                throw new RuntimeException("Company with name " + companyDTO.getName() + " already exists");
+            }
 
-        Company company = companyMapper.toEntity(companyDTO);
-        
-        if (companyDTO.getContactPersonId() != null) {
-            ContactPerson contactPerson = contactPersonRepository.findById(companyDTO.getContactPersonId())
-                .orElseThrow(() -> new RuntimeException("Contact person not found"));
-            company.setContactPerson(contactPerson);
-        }
+            // Validate contact person if provided
+            if (companyDTO.getContactPersonId() != null) {
+                contactPersonRepository.findById(companyDTO.getContactPersonId())
+                    .orElseThrow(() -> new RuntimeException("Contact person not found"));
+            }
 
-        return companyMapper.toDto(companyRepository.save(company));
+            // Use JDBC repository for direct PostgreSQL enum handling
+            Company company = companyRepositoryImpl.createCompany(
+                companyDTO.getName(),
+                companyDTO.getCorporationType(),
+                companyDTO.getContactPersonId()
+            );
+
+            return companyMapper.toDto(company);
+        } catch (Exception e) {
+            throw new RuntimeException("Failed to create company: " + e.getMessage(), e);
+        }
     }
 
     @Override
