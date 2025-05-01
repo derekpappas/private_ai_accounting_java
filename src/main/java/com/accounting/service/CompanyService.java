@@ -7,9 +7,9 @@ import com.accounting.api.dto.CompanyDTO;
 import com.accounting.model.entity.Company;
 
 public interface CompanyService {
-    CompanyDTO createCompany(CompanyDTO companyDTO);
-    Optional<CompanyDTO> getCompanyById(Long id);
     List<CompanyDTO> getAllCompanies();
+    Optional<CompanyDTO> getCompanyById(Long id);
+    CompanyDTO createCompany(CompanyDTO companyDTO);
     CompanyDTO updateCompany(CompanyDTO companyDTO);
     void deleteCompany(Long id);
     boolean existsByName(String name);

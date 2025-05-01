@@ -15,15 +15,14 @@ public class Company {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String name;
 
     @Column(name = "corporation_type", nullable = false)
     private String corporationType;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "contact_person_id")
-    private ContactPerson contactPerson;
+    @Column(name = "contact_person_id")
+    private Long contactPersonId;
 
     @OneToMany(mappedBy = "company", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<BankInfo> bankAccounts = new ArrayList<>();

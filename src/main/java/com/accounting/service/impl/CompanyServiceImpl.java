@@ -29,28 +29,17 @@ public class CompanyServiceImpl implements CompanyService {
     @Override
     @Transactional
     public CompanyDTO createCompany(CompanyDTO companyDTO) {
-        try {
-            if (companyRepository.existsByName(companyDTO.getName())) {
-                throw new RuntimeException("Company with name " + companyDTO.getName() + " already exists");
-            }
-
-            // Validate contact person if provided
-            if (companyDTO.getContactPersonId() != null) {
-                contactPersonRepository.findById(companyDTO.getContactPersonId())
-                    .orElseThrow(() -> new RuntimeException("Contact person not found"));
-            }
-
-            // Use JDBC repository for direct PostgreSQL enum handling
-            Company company = companyRepositoryImpl.createCompany(
-                companyDTO.getName(),
-                companyDTO.getCorporationType(),
-                companyDTO.getContactPersonId()
-            );
-
-            return companyMapper.toDto(company);
-        } catch (Exception e) {
-            throw new RuntimeException("Failed to create company: " + e.getMessage(), e);
+        if (companyRepository.existsByName(companyDTO.getName())) {
+            throw new IllegalArgumentException("Company with this name already exists");
         }
+
+        Company company = companyRepository.createCompanyWithEnumCast(
+            companyDTO.getName(),
+            companyDTO.getCorporationType(),
+            companyDTO.getContactPersonId()
+        );
+        
+        return companyMapper.toDto(company);
     }
 
     @Override
@@ -63,24 +52,19 @@ public class CompanyServiceImpl implements CompanyService {
     @Override
     @Transactional(readOnly = true)
     public List<CompanyDTO> getAllCompanies() {
-        return companyMapper.toDtoList(companyRepository.findAll());
+        List<Company> companies = companyRepository.findAll();
+        return companyMapper.toDtoList(companies);
     }
 
     @Override
     @Transactional
     public CompanyDTO updateCompany(CompanyDTO companyDTO) {
         Company company = companyRepository.findById(companyDTO.getId())
-            .orElseThrow(() -> new RuntimeException("Company not found"));
+                .orElseThrow(() -> new IllegalArgumentException("Company not found"));
         
         companyMapper.updateEntityFromDto(companyDTO, company);
-        
-        if (companyDTO.getContactPersonId() != null) {
-            ContactPerson contactPerson = contactPersonRepository.findById(companyDTO.getContactPersonId())
-                .orElseThrow(() -> new RuntimeException("Contact person not found"));
-            company.setContactPerson(contactPerson);
-        }
-
-        return companyMapper.toDto(companyRepository.save(company));
+        company = companyRepository.save(company);
+        return companyMapper.toDto(company);
     }
 
     @Override

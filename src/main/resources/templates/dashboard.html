@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{layout/base}">
+
+<head>
+    <title>Dashboard</title>
+</head>
+
+<body>
+    <div layout:fragment="content">
+        <h1 class="mb-4">Dashboard</h1>
+
+        <!-- Companies Section -->
+        <div class="row mb-4">
+            <div class="col">
+                <div class="card">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <h5 class="card-title mb-0">Companies</h5>
+                        <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#addCompanyModal">
+                            Add Company
+                        </button>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Type</th>
+                                        <th>Contact Person</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr th:each="company : ${companies}">
+                                        <td th:text="${company.name}">Company Name</td>
+                                        <td th:text="${company.corporationType}">Corporation Type</td>
+                                        <td th:text="${company.contactPersonId}">Contact Person</td>
+                                        <td>
+                                            <div class="btn-group btn-group-sm">
+                                                <a th:href="@{/companies/{id}(id=${company.id})}" 
+                                                   class="btn btn-outline-primary">View</a>
+                                                <button class="btn btn-outline-secondary"
+                                                        th:onclick="'editCompany(' + ${company.id} + ')'">Edit</button>
+                                                <button class="btn btn-outline-danger"
+                                                        th:onclick="'deleteCompany(' + ${company.id} + ')'">Delete</button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Add Company Modal -->
+        <div class="modal fade" id="addCompanyModal" tabindex="-1">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Add New Company</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="addCompanyForm">
+                            <div class="mb-3">
+                                <label for="companyName" class="form-label">Company Name</label>
+                                <input type="text" class="form-control" id="companyName" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="corporationType" class="form-label">Corporation Type</label>
+                                <select class="form-select" id="corporationType" required>
+                                    <option value="">Select type...</option>
+                                    <option value="LLC">LLC</option>
+                                    <option value="CORPORATION">Corporation</option>
+                                    <option value="PARTNERSHIP">Partnership</option>
+                                </select>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary" onclick="saveCompany()">Save Company</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Page specific scripts -->
+    <th:block layout:fragment="scripts">
+        <script th:inline="javascript">
+            function editCompany(id) {
+                // Implement edit functionality
+                console.log('Edit company:', id);
+            }
+
+            function deleteCompany(id) {
+                if (confirm('Are you sure you want to delete this company?')) {
+                    fetch(`/api/companies/${id}`, {
+                        method: 'DELETE'
+                    }).then(response => {
+                        if (response.ok) {
+                            location.reload();
+                        } else {
+                            alert('Error deleting company');
+                        }
+                    });
+                }
+            }
+
+            function saveCompany() {
+                const name = document.getElementById('companyName').value;
+                const corporationType = document.getElementById('corporationType').value;
+
+                fetch('/api/companies', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        name: name,
+                        corporationType: corporationType
+                    })
+                }).then(response => {
+                    if (response.ok) {
+                        location.reload();
+                    } else {
+                        alert('Error saving company');
+                    }
+                });
+            }
+        </script>
+    </th:block>
+</body>
+
+</html> 
