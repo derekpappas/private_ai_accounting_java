@@ -16,16 +16,16 @@ public class File {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
+    @Column(name = "filename", nullable = false)
     private String filename;
 
-    @Column(nullable = false)
+    @Column(name = "type", nullable = false)
     private String type;
 
-    @Column(nullable = false)
+    @Column(name = "file_path", nullable = false)
     private String filePath;
 
-    @Column(nullable = false)
+    @Column(name = "uploaded_at")
     private LocalDateTime uploadedAt;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -38,4 +38,7 @@ public class File {
 
     @OneToMany(mappedBy = "file", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Transaction> transactions = new ArrayList<>();
+
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
 } 

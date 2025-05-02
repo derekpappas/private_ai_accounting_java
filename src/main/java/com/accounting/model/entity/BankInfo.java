@@ -33,11 +33,17 @@ public class BankInfo {
     @Column(nullable = false)
     private String bankName;
 
+    @Column(nullable = false)
+    private String accountNumber;
+
+    @Column(nullable = false)
+    private String routingNumber;
+
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private AccountType accountType;
 
-    @Column(name = "last_4_digits", length = 4)
+    @Column(name = "last_4_digits")
     private String last4Digits;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -46,4 +52,19 @@ public class BankInfo {
 
     @OneToMany(mappedBy = "bankInfo", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<File> files = new ArrayList<>();
+
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
+    public String getBankName() { return bankName; }
+    public void setBankName(String bankName) { this.bankName = bankName; }
+    public String getAccountNumber() { return accountNumber; }
+    public void setAccountNumber(String accountNumber) { this.accountNumber = accountNumber; }
+    public String getRoutingNumber() { return routingNumber; }
+    public void setRoutingNumber(String routingNumber) { this.routingNumber = routingNumber; }
+    public AccountType getAccountType() { return accountType; }
+    public void setAccountType(AccountType accountType) { this.accountType = accountType; }
+    public String getLast4Digits() { return last4Digits; }
+    public void setLast4Digits(String last4Digits) { this.last4Digits = last4Digits; }
+    public Company getCompany() { return company; }
+    public void setCompany(Company company) { this.company = company; }
 } 

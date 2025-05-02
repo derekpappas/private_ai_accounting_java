@@ -16,7 +16,6 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.Getter;
 
 import com.accounting.model.enums.TransactionType;
 
@@ -28,7 +27,6 @@ import com.accounting.model.enums.TransactionType;
 public class Transaction {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Getter
     private Long id;
 
     @Enumerated(EnumType.STRING)

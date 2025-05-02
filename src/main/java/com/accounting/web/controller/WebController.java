@@ -10,24 +10,15 @@ import com.accounting.service.TransactionService;
 import com.accounting.service.FileService;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 
 @Controller
 @RequestMapping("/web")
+@RequiredArgsConstructor
 public class WebController {
 
     private final CompanyService companyService;
     private final TransactionService transactionService;
     private final FileService fileService;
-
-    @Autowired
-    public WebController(CompanyService companyService, 
-                        TransactionService transactionService, 
-                        FileService fileService) {
-        this.companyService = companyService;
-        this.transactionService = transactionService;
-        this.fileService = fileService;
-    }
 
     @GetMapping
     public String home(Model model) {

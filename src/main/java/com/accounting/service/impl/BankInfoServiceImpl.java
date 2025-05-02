@@ -7,6 +7,7 @@ import com.accounting.model.entity.BankInfo;
 import com.accounting.repository.BankInfoRepository;
 import com.accounting.service.BankInfoService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -14,11 +15,16 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-@RequiredArgsConstructor
 @Transactional
 public class BankInfoServiceImpl implements BankInfoService {
     private final BankInfoRepository bankInfoRepository;
     private final BankInfoMapper bankInfoMapper;
+
+    @Autowired
+    public BankInfoServiceImpl(BankInfoRepository bankInfoRepository, BankInfoMapper bankInfoMapper) {
+        this.bankInfoRepository = bankInfoRepository;
+        this.bankInfoMapper = bankInfoMapper;
+    }
 
     @Override
     public BankInfoDTO createBankInfo(BankInfoDTO bankInfoDTO) {
