@@ -17,18 +17,6 @@ public class CreditCard {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "card_number", nullable = false)
-    private String cardNumber;
-
-    @Column(name = "cardholder_name", nullable = false)
-    private String cardholderName;
-
-    @Column(name = "expiration_date", nullable = false)
-    private String expirationDate;
-
-    @Column(name = "cvv", nullable = false)
-    private String cvv;
-
     @Enumerated(EnumType.STRING)
     @Column(name = "card_type", nullable = false)
     private CardType cardType;
@@ -62,4 +50,10 @@ public class CreditCard {
 
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
+    public CardType getCardType() { return cardType; }
+    public void setCardType(CardType cardType) { this.cardType = cardType; }
+    public String getLast4Digits() { return last4Digits; }
+    public void setLast4Digits(String last4Digits) { this.last4Digits = last4Digits; }
+    public Company getCompany() { return company; }
+    public void setCompany(Company company) { this.company = company; }
 } 

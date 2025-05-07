@@ -2,11 +2,9 @@ package com.accounting.api.dto;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.AllArgsConstructor;
 
 @Data
 @NoArgsConstructor
-@AllArgsConstructor
 public class CompanyDTO {
     private Long id;
     private String name;
@@ -18,6 +16,13 @@ public class CompanyDTO {
     }
 
     public void setContactPersonId(Long contactPersonId) {
+        this.contactPersonId = contactPersonId;
+    }
+
+    public CompanyDTO(Long id, String name, String corporationType, Long contactPersonId) {
+        this.id = id;
+        this.name = name;
+        this.corporationType = corporationType;
         this.contactPersonId = contactPersonId;
     }
 } 

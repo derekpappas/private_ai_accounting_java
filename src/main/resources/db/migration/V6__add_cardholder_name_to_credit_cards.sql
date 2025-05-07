@@ -1,0 +1,1 @@
+ALTER TABLE credit_cards ADD COLUMN cardholder_name VARCHAR(255) NOT NULL; 

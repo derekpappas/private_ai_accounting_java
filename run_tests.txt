@@ -1,0 +1,41 @@
+
+=== Test Results ===
+
+
+CONTROLLER LAYER:
+--------------------------------------------------------------------------------
+com.accounting.api.controller.CompanyControllerTest: [92mPASSED[0m
+
+Controller Statistics:
+  Total: 1, Passed: 1, Failed: 0, Errors: 0, Not Run: 0
+
+OTHER LAYER:
+--------------------------------------------------------------------------------
+with: [91mFAILED[0m
+with: [91mFAILED[0m
+
+Other Statistics:
+  Total: 2, Passed: 0, Failed: 2, Errors: 0, Not Run: 0
+
+REPOSITORY LAYER:
+--------------------------------------------------------------------------------
+com.accounting.repository.BankInfoRepositoryTest: [91mFAILED[0m
+com.accounting.repository.CompanyRepositoryTest: [91mFAILED[0m
+com.accounting.repository.CreditCardRepositoryTest: [91mFAILED[0m
+com.accounting.repository.FileRepositoryTest: [91mFAILED[0m
+com.accounting.repository.TransactionRepositoryTest: [91mFAILED[0m
+
+Repository Statistics:
+  Total: 5, Passed: 0, Failed: 5, Errors: 0, Not Run: 0
+
+SERVICE LAYER:
+--------------------------------------------------------------------------------
+com.accounting.service.CompanyServiceTest: [92mPASSED[0m
+com.accounting.service.CompanyServiceTest: [91mFAILED[0m
+
+Service Statistics:
+  Total: 2, Passed: 1, Failed: 1, Errors: 0, Not Run: 0
+
+=== Overall Statistics ===
+Total: 10, Passed: 2, Failed: 8, Errors: 0, Not Run: 0
+================================================================================

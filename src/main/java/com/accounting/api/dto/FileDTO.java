@@ -2,12 +2,10 @@ package com.accounting.api.dto;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.AllArgsConstructor;
 import java.time.LocalDateTime;
 
 @Data
 @NoArgsConstructor
-@AllArgsConstructor
 public class FileDTO {
     private Long id;
     private String name;
@@ -31,4 +29,14 @@ public class FileDTO {
     public void setBankInfoId(Long bankInfoId) { this.bankInfoId = bankInfoId; }
     public Long getCreditCardId() { return creditCardId; }
     public void setCreditCardId(Long creditCardId) { this.creditCardId = creditCardId; }
+
+    public FileDTO(Long id, String name, String contentType, String filePath, java.time.LocalDateTime uploadedAt, Long bankInfoId, Long creditCardId) {
+        this.id = id;
+        this.name = name;
+        this.contentType = contentType;
+        this.filePath = filePath;
+        this.uploadedAt = uploadedAt;
+        this.bankInfoId = bankInfoId;
+        this.creditCardId = creditCardId;
+    }
 } 

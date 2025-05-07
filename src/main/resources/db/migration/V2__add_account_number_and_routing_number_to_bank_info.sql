@@ -1,0 +1,2 @@
+ALTER TABLE bank_info ADD COLUMN account_number VARCHAR(255) NOT NULL;
+ALTER TABLE bank_info ADD COLUMN routing_number VARCHAR(255) NOT NULL; 

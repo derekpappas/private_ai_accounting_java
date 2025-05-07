@@ -2,11 +2,9 @@ package com.accounting.api.dto;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.AllArgsConstructor;
 
 @Data
 @NoArgsConstructor
-@AllArgsConstructor
 public class BankInfoDTO {
     private Long id;
     private String bankName;
@@ -30,4 +28,14 @@ public class BankInfoDTO {
     public void setLast4Digits(String last4Digits) { this.last4Digits = last4Digits; }
     public Long getCompanyId() { return companyId; }
     public void setCompanyId(Long companyId) { this.companyId = companyId; }
+
+    public BankInfoDTO(Long id, String bankName, String accountNumber, String routingNumber, String accountType, String last4Digits, Long companyId) {
+        this.id = id;
+        this.bankName = bankName;
+        this.accountNumber = accountNumber;
+        this.routingNumber = routingNumber;
+        this.accountType = accountType;
+        this.last4Digits = last4Digits;
+        this.companyId = companyId;
+    }
 } 

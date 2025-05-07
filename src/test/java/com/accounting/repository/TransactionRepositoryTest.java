@@ -130,10 +130,6 @@ class TransactionRepositoryTest {
         company = entityManager.persist(company);
 
         CreditCard creditCard = new CreditCard();
-        creditCard.setCardNumber("1234567890123456");
-        creditCard.setCardholderName("John Doe");
-        creditCard.setExpirationDate("12/25");
-        creditCard.setCvv("123");
         creditCard.setCardType(CardType.VISA);
         creditCard.setLast4Digits("3456");
         creditCard.setCompany(company);

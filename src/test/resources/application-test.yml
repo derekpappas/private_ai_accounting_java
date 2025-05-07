@@ -4,18 +4,32 @@ spring:
     username: sa
     password: 
     driver-class-name: org.h2.Driver
+    hikari:
+      maximum-pool-size: 10
+      minimum-idle: 5
+      idle-timeout: 300000
+      connection-timeout: 20000
+      auto-commit: false
   jpa:
     database-platform: org.hibernate.dialect.H2Dialect
     hibernate:
       ddl-auto: create-drop
     show-sql: true
+    open-in-view: false
     properties:
       hibernate:
         format_sql: true
         globally_quoted_identifiers: false
-        dialect: org.hibernate.dialect.H2Dialect
+        default_schema: PUBLIC
   flyway:
     enabled: false
+logging:
+  level:
+    com.accounting: DEBUG
+    org.springframework.web: DEBUG
+    org.hibernate: INFO
+    org.springframework.transaction: DEBUG
+    org.springframework.orm.jpa: DEBUG
   test:
     database:
       replace: none 

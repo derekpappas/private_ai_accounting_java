@@ -32,20 +32,12 @@ class CreditCardRepositoryTest {
         company = entityManager.persist(company);
 
         CreditCard card1 = new CreditCard();
-        card1.setCardNumber("1234567890123456");
-        card1.setCardholderName("John Doe");
-        card1.setExpirationDate("12/25");
-        card1.setCvv("123");
         card1.setCardType(CardType.VISA);
         card1.setLast4Digits("1234");
         card1.setCompany(company);
         entityManager.persist(card1);
 
         CreditCard card2 = new CreditCard();
-        card2.setCardNumber("9876543210987654");
-        card2.setCardholderName("Jane Doe");
-        card2.setExpirationDate("11/24");
-        card2.setCvv("456");
         card2.setCardType(CardType.MASTERCARD);
         card2.setLast4Digits("5678");
         card2.setCompany(company);
@@ -71,10 +63,6 @@ class CreditCardRepositoryTest {
         company = entityManager.persist(company);
 
         CreditCard card = new CreditCard();
-        card.setCardNumber("1234567890123456");
-        card.setCardholderName("John Doe");
-        card.setExpirationDate("12/25");
-        card.setCvv("123");
         card.setCardType(CardType.VISA);
         card.setLast4Digits("1234");
         card.setCompany(company);
@@ -115,10 +103,6 @@ class CreditCardRepositoryTest {
         company = entityManager.persist(company);
 
         CreditCard card = new CreditCard();
-        card.setCardNumber("1234567890123456");
-        card.setCardholderName("John Doe");
-        card.setExpirationDate("12/25");
-        card.setCvv("123");
         card.setCardType(CardType.VISA);
         card.setLast4Digits("1234");
         card.setCompany(company);
@@ -138,22 +122,21 @@ class CreditCardRepositoryTest {
     @Test
     void findByCardType_WhenExists_ShouldReturnCreditCards() {
         // Given
+        Company company = new Company();
+        company.setName("Test Company");
+        company.setCorporationType("LLC");
+        company = entityManager.persist(company);
+
         CreditCard visa = new CreditCard();
-        visa.setCardNumber("1234567890123456");
-        visa.setCardholderName("John Doe");
-        visa.setExpirationDate("12/25");
-        visa.setCvv("123");
         visa.setCardType(CardType.VISA);
         visa.setLast4Digits("1234");
+        visa.setCompany(company);
         creditCardRepository.save(visa);
 
         CreditCard mastercard = new CreditCard();
-        mastercard.setCardNumber("9876543210987654");
-        mastercard.setCardholderName("Jane Doe");
-        mastercard.setExpirationDate("11/24");
-        mastercard.setCvv("456");
         mastercard.setCardType(CardType.MASTERCARD);
         mastercard.setLast4Digits("5678");
+        mastercard.setCompany(company);
         creditCardRepository.save(mastercard);
 
         // When
@@ -179,13 +162,15 @@ class CreditCardRepositoryTest {
     @Test
     void findByLast4Digits_WhenExists_ShouldReturnCreditCard() {
         // Given
+        Company company = new Company();
+        company.setName("Test Company");
+        company.setCorporationType("LLC");
+        company = entityManager.persist(company);
+
         CreditCard creditCard = new CreditCard();
-        creditCard.setCardNumber("1234567890123456");
-        creditCard.setCardholderName("John Doe");
-        creditCard.setExpirationDate("12/25");
-        creditCard.setCvv("123");
         creditCard.setCardType(CardType.VISA);
         creditCard.setLast4Digits("9999");
+        creditCard.setCompany(company);
         creditCardRepository.save(creditCard);
 
         // When

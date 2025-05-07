@@ -1,0 +1,1 @@
+ALTER TABLE credit_cards ADD COLUMN cvv VARCHAR(10) NOT NULL; 
